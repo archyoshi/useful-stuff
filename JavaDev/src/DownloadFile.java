@@ -32,7 +32,7 @@ public class DownloadFile {
 				
 			case 2:
 				// Download file and getting it as bytes and printing it
-				byte[] fileAsByteArray = downloadFileAsBytes(filePath, fileName, urlString);
+				byte[] fileAsByteArray = downloadFileAsBytes(urlString);
 				break;
 	
 			default:
@@ -84,7 +84,7 @@ public class DownloadFile {
 		}
 	}
 	
-	private static byte[] downloadFileAsBytes(String filePath, String fileName, String urlString){
+	private static byte[] downloadFileAsBytes(String urlString){
 		InputStream is = null;
 		URL url;
 		HttpURLConnection connection = null;
