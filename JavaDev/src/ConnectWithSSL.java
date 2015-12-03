@@ -7,7 +7,7 @@ import java.net.URL;
 
 public class ConnectWithSSL {
 	
-	private final static String keyStorePath = "C:\\Users\\tis\\Downloads\\mykeystore.jks";
+	private final static String keyStorePath = "ressources\\mykeystore.jks";
 	private final static String keyStorePassword = "mypassword";
 	private final static String keyStoreType = "JKS";
 	private final static String urlString = "https://raw.githubusercontent.com/thami78/useful-stuff/master/README.md";
