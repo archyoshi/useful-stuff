@@ -6,7 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import com.sun.xml.internal.ws.util.ByteArrayBuffer;
+import com.sun.xml.ws.util.ByteArrayBuffer;
 
 @SuppressWarnings({"unused"})
 public class DownloadFile {
@@ -42,7 +42,7 @@ public class DownloadFile {
 		}
 	}
 	
-	private static void downloadFile(String filePath, String fileName, String urlString){
+	public static void downloadFile(String filePath, String fileName, String urlString){
 		InputStream is = null;
 		OutputStream os = null;
 		URL url;
@@ -84,7 +84,7 @@ public class DownloadFile {
 		}
 	}
 	
-	private static byte[] downloadFileAsBytes(String urlString){
+	public static byte[] downloadFileAsBytes(String urlString){
 		InputStream is = null;
 		URL url;
 		HttpURLConnection connection = null;
