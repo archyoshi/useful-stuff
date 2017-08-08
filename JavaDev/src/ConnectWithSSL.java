@@ -20,11 +20,11 @@ public class ConnectWithSSL {
 	// example inspired from : http://docs.oracle.com/javase/1.5.0/docs/guide/security/jsse/samples/urls/URLReader.java
 	
 	public static void main(String[] args) {
-		System.out.println(ConnectViaSSL(keyStorePath, keyStorePassword, keyStoreType, urlString));
+		System.out.println(connectViaSSL(keyStorePath, keyStorePassword, keyStoreType, urlString));
 		
 	}
 	
-	public static String ConnectViaSSL(String keyStorePath, String keyStorePassword, String keyStoreType, String urlString){
+	public static String connectViaSSL(String keyStorePath, String keyStorePassword, String keyStoreType, String urlString){
 		
 		System.setProperty("javax.net.ssl.keyStore",keyStorePath);
 		System.setProperty("javax.net.ssl.keyStorePassword", keyStorePassword);

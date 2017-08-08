@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 //import org.json.JSONObject;
 
 public class TheTools {
@@ -73,6 +75,15 @@ public class TheTools {
 		}
 		
 		return finalJsonString;
+	}
+	
+	public static ArrayList<String> stringToArrayList(String stringToConvert, String separator){
+		String temp [] = stringToConvert.split(separator);
+		ArrayList<String> al = new ArrayList<String>();
+		for(String s : temp){
+			al.add(s);
+		}
+		return al;
 	}
 
 }
