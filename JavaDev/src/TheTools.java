@@ -1,4 +1,8 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 //import org.json.JSONObject;
 
@@ -84,6 +88,23 @@ public class TheTools {
 			al.add(s);
 		}
 		return al;
+	}
+	
+	/* Not very clean, I should clean that someday ... */
+	private static SimpleDateFormat sd;
+	
+	public static Date convertDate(String dateToConvert, String pattern, Locale locale)
+			throws ParseException {
+		sd =  new SimpleDateFormat(pattern, locale);
+		return convertDate(dateToConvert, pattern);
+	}
+
+	private static Date convertDate(String dateToConvert, String pattern)
+			throws ParseException {
+		if (null != dateToConvert) {
+			return sd.parse(dateToConvert);
+		}
+		return new Date(0);
 	}
 
 }

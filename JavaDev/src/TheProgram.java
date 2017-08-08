@@ -1,6 +1,11 @@
 import java.io.IOException;
+import java.text.DateFormatSymbols;
+import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -14,17 +19,22 @@ public class TheProgram {
 	private final static String fileName = "file_4510969.html";
 
 	private final static String pathToExcelFile = "ressources\\SampleExcelDoc.xlsx";
+	
+	private static final String DATE_PATTERN = "yyyyMMddhhmmss";
+	private static final String DATE_PATTERN_FR = "dd MMM yyyy";
+	private static final String DATE_PATTERN_FR_SHORT = "dd MMM yyyy";
 
 	public static void main(String[] args) {
 		/* This is supposed to be a program for calling / testing other tools. */
 
-		int testNumber = 8;
+		int testNumber = 9;
 		/*
 		 * 1: testing download file. 2: testing if a string of a string array
 		 * contains a value 3: testing to transform a json like string to a json
 		 * string 4: 5: 6: Testing hashmap and string conversions...
 		 * 
 		 * 8: Testing xml schema validation
+		 * 9: aggregating fields - to be checked again
 		 */
 
 		switch (testNumber) {
@@ -169,10 +179,101 @@ public class TheProgram {
 		      System.out.println("emptyFile.xml validates against shiporder.xsd? "+XMLValidation.validateXMLSchema("ressources/shiporder.xsd", "ressources/emptyFile.xml"));
 			break;
 			
+		case 9:
+			testAggregateField();
+			break;
+			
 		default:
 			System.out.println("No test chosen, bye !");
 			break;
 		}
+
+	}
+	
+	private static void testDates() {
+
+
+		String dateToParse = "20160112035627";
+
+		String millisDate = "1458265731743";
+
+		String frenchDate = "15 juillet 2013";
+		String frenchDateShort1 = "15 juil. 2013";
+		String frenchDateShort2 = "19 nov. 2012";
+
+		for (String m : DateFormatSymbols.getInstance(Locale.FRENCH)
+				.getShortMonths()) {
+			System.out.println(m);
+		}
+
+		System.out.println("millisDate is : "
+				+ new Date(Long.parseLong(millisDate)));
+
+		try {
+			System.out.println("converted dateToParse is : "
+					+ TheTools.convertDate(dateToParse, DATE_PATTERN,
+							new Locale("en")));
+			// System.out.println("converted dateToParse is : "
+			// + utilities.convertDate(dateToParse, DATE_PATTERN,
+			// Locale.ENGLISH));
+			System.out.println("converted frenchDate is : "
+					+ TheTools.convertDate(frenchDate, DATE_PATTERN_FR,
+							new Locale("fr")));
+			System.out.println("converted frenchDateShort1 is : "
+					+ TheTools.convertDate(frenchDateShort1,
+							DATE_PATTERN_FR_SHORT, Locale.FRENCH));
+			System.out.println("converted frenchDateShort2 is : "
+					+ TheTools.convertDate(frenchDateShort2,
+							DATE_PATTERN_FR_SHORT, Locale.FRENCH));
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void testAggregateField() {
+
+		HashMap<String, String> document = new HashMap<String, String>();
+		document.put("EN_Title", "This is a title");
+		document.put("GB_Title", "This is a title");
+		document.put("FR_Title", "Ceci est un titre");
+		
+
+
+		String FIELD_NAME = "title";
+		String SOURCE_RE = "[A-Za-z]{2}_Title";
+		String SEPARATOR = ",";
+
+		String fn = "";
+		String fv = "";
+		String finalValue = "";
+
+		Collection<String> fieldNames = document.keySet();
+		
+		for (String fieldName : fieldNames) {
+			fn = (String) fieldName;
+			fv = document.get(fn);
+			System.out.println(fn + ": " + fv);
+		}
+
+		// iterate trough all filednames and process those who match SOURCE_RE
+		for (Object fieldName : fieldNames) {
+			fn = (String) fieldName;
+			if (fn.matches(SOURCE_RE)) {
+				fv = document.get(fn);
+				if (!finalValue.contains(fv)) {
+					finalValue += fv + SEPARATOR + " ";
+				}
+			}
+		}
+
+		// remove the trailing space and separator
+		if (!finalValue.equals("")) {
+			finalValue = finalValue.substring(0, finalValue.length()
+					- (SEPARATOR.length() + 1));
+		}
+
+		System.out.println("finalValue is:\n" + finalValue);
 
 	}
 }
