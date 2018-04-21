@@ -21,3 +21,6 @@ This works for me very well, to achieve almost the same purpose like yours.
 
 For more options: man grep
 
+#Customizations for my own terminal
+PS1="\[\e]0;\t \u@ \W\a\]${debian_chroot:+($debian_chroot)}\t \[\033[01;32m\]\u\[\033[00m\]@ \[\033[01;34m\]\W\[\033[00m\] \$ "
+
